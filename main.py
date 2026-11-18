@@ -33,8 +33,10 @@ def createRandomNoise(width, height):
 
     for x in range(width):
         for y in range(height):
-            # Replace pass with your random noise logic
-            pass
+            if random.random() > 0.5:
+                im.setPixel(x, y, image.Pixel(255, 255, 255))
+            else:
+                im.setPixel(x, y, image.Pixel(0, 0, 0))
 
     return im
 
@@ -54,8 +56,10 @@ def createWhiteLine(line_num, width, height):
     
     for x in range(width):
         for y in range(height):
-            # Replace pass with your white line logic
-            pass
+            if y == line_num:
+                im.setPixel(x, y, image.Pixel(255, 255, 255))
+            else:
+                im.setPixel(x, y, image.Pixel(0, 0, 0))
 
     return im
 
@@ -71,12 +75,14 @@ the number of pixels between each white line.
 
 def createAlternateLines(gap, width, height):
     im = image.EmptyImage(width, height)
+    black = image.Pixel(0, 0, 0)
+    white = image.Pixel(255, 255, 255)
 
-    for x in range(width):
-        for y in range(height):
-            # Replace pass with your alternate lines logic
-            pass
-
+    for y in range(height):
+        color = white if y % (gap + 1) == 0 else black
+        for x in range(width):
+            im.setPixel(x, y, color)
+                
     return im
 
 
@@ -101,9 +107,13 @@ def decodeImage():
 
     for x in range(secret.width):
         for y in range(secret.height):
-            # Replace pass with your decoding logic
-            pass
-
+            rgb = secret.getPixel(x,y)
+            if rgb[0] % 2 == 0:
+                secret.setPixel(x, y, image.Pixel(255, 0, 0))
+            else:
+                secret.setPixel(x, y, image.Pixel(0, 0, 0))
+            
+    
     return secret
 
 
